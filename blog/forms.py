@@ -1,22 +1,17 @@
-from django.contrib import admin
+from django import forms
+from django.core.exceptions import ValidationError
 
-from .forms import SubscriptionsForm
-from .models import Blog, Post, Subscriptions
-
-
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ["owner"]
+from .models import Subscriptions
 
 
-@admin.register(Subscriptions)
-class SubscriptionsAdmin(admin.ModelAdmin):
-    form = SubscriptionsForm
-    list_display = ["user", "blog"]
+class SubscriptionsForm(forms.ModelForm):
+    class Meta:
+        model = Subscriptions
+        fields = ("user", "blog")
 
-
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "blog", "created"]
-    list_filter = ["created", "blog"]
-    search_fields = ["title"]
+    def clean(self):
+        cleaned_data = super().clean()
+        user = cleaned_data.get("user")
+        blog = cleaned_data.get("blog")
+        if user == blog.owner:
+            raise ValidationError("You can't subscribe to your blog.")
