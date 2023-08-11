@@ -93,3 +93,12 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+
+CELERY_BEAT_SCHEDULE = {
+    "display-user-feed-posts": {
+        "task": "blog.tasks.display_user_feed_posts",
+        "schedule": 10.0,
+    },
+}

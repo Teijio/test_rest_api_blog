@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .forms import SubscriptionsForm
-from .models import Blog, Post, Subscriptions
+from .models import Blog, Post, Subscriptions, ReadPost
 
 
 @admin.register(Blog)
@@ -20,3 +20,8 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "blog", "created"]
     list_filter = ["created", "blog"]
     search_fields = ["title"]
+
+
+@admin.register(ReadPost)
+class ReadPostAdmin(admin.ModelAdmin):
+    pass
