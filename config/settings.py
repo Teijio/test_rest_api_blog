@@ -1,14 +1,23 @@
+import os
+import sys
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = (
-    "django-insecure-r-e-zxf%hrlva6jej)og5bg*=m71^^mulpe#y9(-hf^#ciq^tn"
-)
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise sys.exit("Check the secret key.")
+
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 INSTALLED_APPS = [
@@ -89,7 +98,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -102,3 +110,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 10.0,
     },
 }
+
+LAST_POSTS = 5
+
+POSTS_PER_PAGE = 10

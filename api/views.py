@@ -1,8 +1,10 @@
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.pagination import LimitOffsetPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from django.conf import settings
 
 from blog.models import User, Post, ReadPost, Subscriptions
 from .serializers import UserSerializer, PostSerializer
@@ -49,6 +51,8 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthorOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ["blog"]
+    pagination_class = LimitOffsetPagination
+    pagination_class.default_limit = settings.POSTS_PER_PAGE
 
     def get_queryset(self):
         user = self.request.user

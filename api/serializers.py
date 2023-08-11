@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 
 
-from blog.models import Blog, Post, Subscriptions, ReadPost
+from blog.models import Post, Subscriptions, ReadPost
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,12 +22,6 @@ class UserSerializer(serializers.ModelSerializer):
         return False
 
 
-class ReadPostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ReadPost
-        fields = "__all__"
-
-
 class PostSerializer(serializers.ModelSerializer):
     is_read = serializers.SerializerMethodField()
 
@@ -41,14 +35,3 @@ class PostSerializer(serializers.ModelSerializer):
         if read_post:
             return read_post.is_read
         return False
-
-
-class PostSubscriptionsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-
-
-class SubscriptionsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subscriptions
-        fields = "__all__"
