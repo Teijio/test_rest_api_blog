@@ -11,12 +11,14 @@ from django.contrib.auth.models import User
 
 from blog.models import Post, Subscriptions
 
+USERS = 20
+POSTS = 10
 
-users = mixer.cycle(20).blend(User)
+users = mixer.cycle(USERS).blend(User)
 
 
 for user in tqdm(users, desc="Creating posts"):
-    mixer.cycle(10).blend(Post, blog=user.blog)
+    mixer.cycle(POSTS).blend(Post, blog=user.blog)
 
 
 for i in tqdm(range(1, len(users) // 2), desc="Creating subscriptions"):
