@@ -56,9 +56,7 @@ class BlogPostViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_authenticated:
-            return Post.objects.filter(blog=user.blog).order_by("-created")
-        return Post.objects.none()
+        return Post.objects.filter(blog=user.blog).order_by("-created")
 
 
 class PostSubscriptionsViewSet(viewsets.ReadOnlyModelViewSet):
