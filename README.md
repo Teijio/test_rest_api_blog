@@ -17,7 +17,7 @@ SECRET_KEY #'< секретный ключ >'
 POSTGRES_USER #postgres
 POSTGRES_PASSWORD #postgres
 POSTGRES_DB  #postgres
-DB_NAME #foodgram
+DB_NAME #blog
 DB_HOST #db
 DB_PORT #5432
 
